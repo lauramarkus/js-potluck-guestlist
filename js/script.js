@@ -18,7 +18,6 @@ const assignedItems = document.querySelector(".assigned-items")
 addGuestButton.addEventListener("click", function(){
     const guest = guestInput.value;
     //console.log(guest);
-
     if (guest !== ""){
         addToList(guest);
     }
@@ -41,23 +40,28 @@ const addToList = function (guest){
 const updateGuestCount = function (){
     const guests = document.querySelectorAll(".guest-list li");
     guestCount.innerText=guests.length;
-    if (guests.length == 3){
+    if (guests.length == 8){
         addGuestButton.classList.add("hide");
         guestInput.classList.add("hide");
         guestInputLabel.classList.add("hide");
         guestFull.classList.remove("hide");
-    }
-    updateGuestCount();
+        }
 };
 
 const assignItems = function(){
     const potluckItems = ["cheese", "olives", "fresh tomatoes and basil", "mozzarella", "prosciutto", "melon", "bread", "hummus and veggies", "pasta", "pesto", "wine", "fruit", "chocolate cake"];
-    const allGuests = document.querySelectorAll(".guest-list");
+    const allGuests = document.querySelectorAll(".guest-list li");
     for (let guest of allGuests){
-        const randomPotluckIndex = Math.floor(Math.random) * potluckItems.length;
+        const randomPotluckIndex = Math.floor(Math.random() * potluckItems.length);
         const randomPotluckItem = potluckItems[randomPotluckIndex];
         const listItem = document.createElement("li");
         listItem.innerText=`${guest.innerText} is bringing ${randomPotluckItem}`;
         assignedItems.append(listItem);
+        potluckItems.splice(randomPotluckIndex,1);
     }
 };
+
+    assignButton.addEventListener("click", function(){
+        assignItems();
+        assignButton.disabled = true;
+    });
